@@ -138,7 +138,6 @@ class Race {
 	func stop() {
 		print("Race complete!")
 		timer.invalidate()
-		
 	}
 }
 
@@ -150,11 +149,32 @@ let participants = [jubilee, sonora, jasper]
 
 let race = Race(laps: 1, participants: participants)
 let tracker = Tracker()
-
-race.delegate = tracker
-
-
+let broadcaster = RaceBroadcaster()
+race.delegate = broadcaster
 race.start()
+
+class RaceManager: HorseRaceDelegate {
+    
+    let race: Race
+    
+    init(race: Race) {
+        self.race = race
+        race.delegate = self
+        race.start()
+    }
+    
+    func race(_ race: Race, didStartAt time: Date) {
+        // some implementation
+    }
+    
+    func addLapLeader(_ horse: Horse, forLap lap: Int, atTime time: Date) {
+        // some implementation
+    }
+    
+    func race(_ race: Race, didEndAt time: Date, withWinner winner: Horse) {
+        // some implementation
+    }
+}
 
 
 
